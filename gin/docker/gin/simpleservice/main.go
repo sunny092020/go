@@ -1,19 +1,18 @@
 package main
-
 import (
-	"runtime"
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
 )
-func main() {
-	router := gin.Default()
-	router.GET("/hello", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-					"message": "Hello World!",
-			})
-	})
+func endpointHandler(c *gin.Context) {
+    c.String(200, "%s %s", c.Request.Method, c.Request.URL.Path)
+}
 
-	router.GET("/os", func(c *gin.Context) {
-			c.String(200, runtime.GOOS)
-	})
-	router.Run(":5000")
+func main() {
+    router := gin.Default()
+    router.GET("/products", endpointHandler)
+    router.GET("/products/:productId", endpointHandler)
+    // Eg: /products/1052
+    router.POST("/products", endpointHandler)
+    router.PUT("/products/:productId", endpointHandler)
+    router.DELETE("/products/:productId", endpointHandler)
+    router.Run(":5000")
 }
