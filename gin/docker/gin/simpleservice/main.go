@@ -1,6 +1,7 @@
 package main
 
 import (
+    "log"
     "fmt"
     "strconv"
     "github.com/gin-gonic/gin"
@@ -40,9 +41,23 @@ func addPost(c *gin.Context) {
     c.JSON(200,  gin.H{"answer": ap.X + ap.Y})
 }
 
+func FindUserAgent() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        log.Println(c.GetHeader("User-Agent"))
+        // Before calling handler
+        c.Next()
+        // After calling handler
+    }
+}
+
 func main() {
     router := gin.Default()
-    
+
+    router.Use(FindUserAgent())
+    router.GET("/", func(c *gin.Context) {
+        c.JSON(200, gin.H{"message": "Middleware works!"})
+    })
+
     router.POST("/print", func(c *gin.Context) {
         var p PrintJob
         if err := c.ShouldBindJSON(&p); err != nil {
