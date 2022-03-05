@@ -1,12 +1,15 @@
 package main
+
 import (
     "fmt"
     "strconv"
     "github.com/gin-gonic/gin"
 )
+
 func v1EndpointHandler(c *gin.Context) {
     c.String(200, "v1: %s %s", c.Request.Method, c.Request.URL.Path)
 }
+
 func v2EndpointHandler(c *gin.Context) {
     c.String(200, "v2: %s %s", c.Request.Method, c.Request.URL.Path)
 }
