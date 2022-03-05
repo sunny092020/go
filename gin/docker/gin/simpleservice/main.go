@@ -24,6 +24,7 @@ type AddParams struct {
     X float64 `json:"x"`
     Y float64 `json:"y"`
 }
+
 func addPost(c *gin.Context) {
     var ap AddParams
     if err := c.ShouldBindJSON(&ap); err != nil {
