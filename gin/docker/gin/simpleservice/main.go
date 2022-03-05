@@ -20,10 +20,24 @@ func add(c *gin.Context) {
     c.String(200,  fmt.Sprintf("%f", x + y))
 }
 
+type AddParams struct {
+    X float64 `json:"x"`
+    Y float64 `json:"y"`
+}
+func addPost(c *gin.Context) {
+    var ap AddParams
+    if err := c.ShouldBindJSON(&ap); err != nil {
+        c.JSON(400, gin.H{"error": "Calculator error"})
+        return
+    }
+
+    c.JSON(200,  gin.H{"answer": ap.X + ap.Y})
+}
+
 func main() {
     router := gin.Default()
     router.GET("/add/:x/:y", add)
-
+    router.POST("/add", addPost)
     v1 := router.Group("/v1")
 
     v1.GET("/products", v1EndpointHandler)
