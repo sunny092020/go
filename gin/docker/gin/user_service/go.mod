@@ -1,4 +1,4 @@
-module userservice
+module user_service
 
 go 1.13
 

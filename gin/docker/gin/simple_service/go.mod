@@ -1,4 +1,4 @@
-module simpleservice
+module simple_service
 
 go 1.13
 
